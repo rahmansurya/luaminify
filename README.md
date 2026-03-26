@@ -1,4 +1,4 @@
-# 🛠️ MIGII-MINIFIER
+# 🛠️ LUA-MINIFIER
 
 <p align="center">
   <img src="https://img.shields.io/badge/Language-Lua-blue.svg" alt="Lua">
@@ -16,7 +16,7 @@
 
 ## 📖 Naon ieu téh?
 
-**MIGII-MINIFIER** nyaéta *tool* sederhana tapi *powerful* anu fungsina pikeun ngolah file `.lua`. Parabot ieu bisa ngarobah kode anu acak-acakan jadi rapih (Unminify) atawa sabalikna, ngompres kode jadi sakalimat sangkan leutik ukuranana (Minify).
+**LUA-MINIFIER** nyaéta *tool* sederhana tapi *powerful* anu fungsina pikeun ngolah file `.lua`. Parabot ieu bisa ngarobah kode anu acak-acakan jadi rapih (Unminify) atawa sabalikna, ngompres kode jadi sakalimat sangkan leutik ukuranana (Minify).
 
 ## 🌟 Fitur Utama
 
