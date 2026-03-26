@@ -50,30 +50,44 @@ end
 -- ==========================================
 local function unminify(code)
     local indent = 0
-    local output = ""
-    local tab = "    " -- 4 Spasi
+    local tab = "    "
 
     local function getIndentStr(n) return string.rep(tab, n) end
+       
+    code = code:gsub("([^%s%=%<>%!%*%/])([%=%+%-%*%/%%<>!]=?)([^%s%=%<>%!%*%/])", "%1 %2 %3")
+    code = code:gsub("%,", ", ")
+    code = code:gsub("%.%.", " .. ")
+        
+    local replacements = {
+        {";", ";\n"},
+        {" do ", " do\n"},
+        {" then ", " then\n"},
+        {" else ", "\nelse\n"},
+        {" elseif ", "\nelseif "},
+        {" end ", "\nend\n"},
+        {" repeat ", "\nrepeat\n"},
+        {" until ", "\nuntil "},
+        {" function", "\nfunction"},
+        {"{", "{\n"},
+        {"}", "\n}"}
+    }
     
-    code = code:gsub(";", ";\n")
-    code = code:gsub(" do ", " do\n")
-    code = code:gsub(" then ", " then\n")
-    code = code:gsub(" else ", "\nelse\n")
-    code = code:gsub(" elseif ", "\nelseif ")
-    code = code:gsub(" end ", "\nend\n")
-    code = code:gsub(" function", "\nfunction")
-
+    for _, r in ipairs(replacements) do
+        code = code:gsub(r[1], r[2])
+    end
+    
     local lines = {}
     for line in code:gmatch("[^\r\n]+") do
         local cleanLine = line:match("^%s*(.-)%s*$")
+        
         if cleanLine ~= "" then
-            if cleanLine:match("^end") or cleanLine:match("^until") or cleanLine:match("^else") or cleanLine:match("^elseif") then
+            if cleanLine:match("^end") or cleanLine:match("^until") or cleanLine:match("^else") or cleanLine:match("^elseif") or cleanLine:match("^}") then
                 indent = math.max(0, indent - 1)
             end
-            
+                        
             table.insert(lines, getIndentStr(indent) .. cleanLine)
-            
-            if cleanLine:match("then$") or cleanLine:match("do$") or cleanLine:match("repeat$") or cleanLine:match("function.*%)$") or cleanLine:match("else$") then
+                        
+            if cleanLine:match("then$") or cleanLine:match("do$") or cleanLine:match("repeat$") or cleanLine:match("function.*") or cleanLine:match("else$") or cleanLine:match("{$") then
                 indent = indent + 1
             end
         end
@@ -81,7 +95,6 @@ local function unminify(code)
     
     return table.concat(lines, "\n")
 end
-
 
 -- COMMAND
 local inputCode = readFile(filename)
