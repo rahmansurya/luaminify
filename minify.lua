@@ -109,13 +109,13 @@ local finalResult = ""
 if action == "minify" then
     outputName = filename:gsub("%.lua$", "") .. "_mini.lua"
     finalResult = minify(inputCode)
-    print("⚡ Minifying...")
+    print("Minifying...")
 elseif action == "unminify" then
     outputName = filename:gsub("%.lua$", "") .. "_unmini.lua"
     finalResult = unminify(inputCode)
-    print("🛠️ Unminifying...")
+    print("Unminifying...")
 else
-    print("❌ Error: Action harus 'minify' atau 'unminify'")
+    print("Error: Action harus 'minify' atau 'unminify'")
     return
 end
 
